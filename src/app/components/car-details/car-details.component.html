@@ -1,0 +1,51 @@
+<div class="car-details-layout">
+  <!-- Sol: Araç görseli -->
+  <div class="car-photo-container">
+    <img [src]="'http://localhost:10160' + car.filePath" class="car-photo" alt="car photo"/>
+  </div>
+
+  <!-- Sağ: Bilgi kartı -->
+  <div class="car-info-card">
+    <div class="card shadow-sm border-0">
+      <div class="card-body">
+        <div class="car-title-wrapper d-flex align-items-center justify-content-between">
+          <div class="car-text">
+            <div class="car-brand fw-bold">{{ car?.brandName }}</div>
+            <div class="car-model">{{ car?.model }}</div>
+          </div>
+          <span class="status-badge bg-{{ car?.isNew ? 'success' : 'secondary' }}">
+            {{ car?.isNew ? 'New' : 'Secondhand' }}
+          </span>
+        </div>
+
+        <ul class="list-group list-group-flush mb-3">
+          <li class="list-group-item">
+            <strong>Release Time:</strong>
+            {{ car?.releaseDatetime | date:'medium' }}
+          </li>
+          <li class="list-group-item">
+            <strong>Engine Volume:</strong>
+            {{ car?.engineVolume }} cc
+          </li>
+          <li class="list-group-item">
+            <strong>Price:</strong>
+            {{ car?.price | currency:'TRY':'symbol':'1.0-0' }}
+          </li>
+          <li class="list-group-item">
+            <strong>Specifications:</strong>
+            {{ car?.carSpecification }}
+          </li>
+        </ul>
+
+        <div class="d-flex justify-content-end gap-2">
+          <button class="btn btn-outline-danger" (click)="deleteCar()">
+            <i class="bi bi-trash"></i> Delete
+          </button>
+          <button class="btn btn-outline-primary" (click)="updateCar(car.carId)">
+            <i class="bi bi-pencil-square"></i> Update
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

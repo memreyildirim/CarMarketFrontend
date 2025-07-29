@@ -1,0 +1,50 @@
+<form [formGroup]="form" class="form-container">
+  <!-- Marka seçimi -->
+  <label for="brand">Brand</label>
+
+  <div class="d-flex align-items-center justify-content-between mb-2">
+    <select formControlName="brandId" id="brandId" class="form-control w-75">
+      <option value="">Select Brand</option>
+      <option *ngFor="let brand of brands" [value]="brand.id">{{ brand.brandName }}</option>
+    </select>
+
+    <button type="button" class="btn btn-sm btn-outline-primary ms-2" (click)="openAddBrandDialog()">
+      + Add Brand
+    </button>
+  </div>
+
+
+  <label>Model</label>
+  <input type="text" formControlName="model" />
+
+
+  <label>Specifications</label>
+  <input type="text" formControlName="carSpecification" id="carSpecification" class="form-control" />
+
+  <label>Price (₺)</label>
+  <input type="number" formControlName="price" id="price" class="form-control" />
+
+
+  <label>Is New?</label>
+  <input type="checkbox" formControlName="isNew" id="isNew" />
+
+  <label>Engine Volume (L)</label>
+  <input type="number" formControlName="engineVolume" step="0.1" id="engineVolume" class="form-control" />
+
+  <label>Release Time</label>
+  <input type="datetime-local" formControlName="releaseDatetime" id="releaseTime" class="form-control" />
+
+  <!-- 📷 Fotoğraf seçimi -->
+  <div class="mb-3">
+    <label for="photo" class="form-label">Araç Fotoğrafı</label>
+    <input type="file" id="photo" (change)="onFileSelected($event)" accept="image/*" class="form-control" />
+  </div>
+
+  <!-- Görsel preview -->
+  <img *ngIf="previewUrl" [src]="previewUrl" class="img-thumbnail mt-2" style="width: 240px; height: auto;" />
+
+
+  <button type="submit" (click)="onSubmit()" [disabled]="form.invalid">Add the Car</button>
+</form>
+
+

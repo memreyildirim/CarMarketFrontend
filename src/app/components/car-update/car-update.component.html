@@ -1,0 +1,35 @@
+<form [formGroup]="form">
+  <!-- Marka seçimi -->
+  <label for="brand">Brand</label>
+  <select formControlName="brandId" id="brandId" class="form-control">
+    <option value="">Select Brand</option>
+    <option *ngFor="let brand of brands" [value]="brand.id">
+      {{ brand.brandName }}
+    </option>
+  </select>
+
+  <label>Model</label>
+  <input type="text" formControlName="model" />
+
+
+  <label>Specifications</label>
+  <input type="text" formControlName="carSpecification" id="carSpecification" class="form-control" />
+
+  <label>Price (₺)</label>
+  <input type="number" formControlName="price" id="price" class="form-control" />
+
+
+  <label>Is New?</label>
+  <input type="checkbox" formControlName="isNew" id="isNew" />
+
+  <label>Engine Volume (L)</label>
+  <input type="number" formControlName="engineVolume" step="0.1" id="engineVolume" class="form-control" />
+
+  <label>Release Time</label>
+  <input type="datetime-local" formControlName="releaseDatetime" id="releaseTime" class="form-control" />
+
+
+  <button type="submit" (click)="onSubmit()" [disabled]="form.invalid">Update The Car</button>
+</form>
+
+

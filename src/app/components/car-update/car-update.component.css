@@ -1,0 +1,60 @@
+form {
+  background: #1e88e5 linear-gradient(to right, #000000, #1e88e5);
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.08);
+  max-width: 600px;
+  margin: auto;
+}
+
+label {
+  display: block;
+  margin-top: 15px;
+  font-weight: 500;
+  color: #ffffff;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="datetime-local"],
+select {
+  margin-top: 5px;
+  margin-bottom: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 5px;
+  border: 1px solid #ced4da;
+  font-size: 15px;
+  background-color: #ffffff;
+}
+
+input[type="checkbox"] {
+  margin-left: 10px;
+  transform: scale(1.2);
+}
+
+button[type="submit"] {
+  margin-top: 25px;
+  width: 100%;
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+button[disabled] {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+
+
+
+

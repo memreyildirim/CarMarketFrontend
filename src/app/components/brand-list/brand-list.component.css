@@ -1,0 +1,80 @@
+.brand-section {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.brand-form-card,
+.brand-table-card {
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-title {
+  margin-bottom: 16px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+.brand-input,
+.edit-input {
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 12px;
+}
+
+button[mat-raised-button] {
+  margin-top: 4px;
+}
+
+.custom-table th.mat-header-cell {
+  background-color: #28a745;
+  width: 100%;
+  font-family: 'Segoe UI', sans-serif;
+  border-collapse: collapse;
+}
+
+.custom-header {
+  background-color: #1976d2;
+  color: black;
+  font-weight: 600;
+  padding: 14px;
+  border-bottom: 2px solid #1565c0;
+  text-align: left;
+}
+
+.custom-table td.mat-cell {
+  padding: 12px;
+  border-bottom: 1px solid #e0e0e0;
+  transition: background 0.3s ease;
+}
+
+.custom-table tr:hover td.mat-cell {
+  background-color: #f9f9f9;
+}
+
+@media screen and (max-width: 768px) {
+  .brand-section {
+    padding: 12px;
+  }
+
+  .brand-form-card,
+  .brand-table-card {
+    padding: 16px;
+  }
+
+  .custom-header,
+  .custom-table td.mat-cell {
+    padding: 10px;
+    font-size: 13px;
+  }
+}
+th.mat-header-cell.custom-header {
+  background-color: #1976d2;
+  color: white;
+  font-weight: 600;
+}
+
