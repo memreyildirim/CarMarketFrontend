@@ -65,32 +65,30 @@ export class CarFormComponent {
     this.saveCar()
   }
 
-  saveCar (): void {
-    if (this.form.valid) {
+  saveCar(): void {
+    if (this.form.valid && this.selectedFile) {
       const formValue = this.form.value;
+      const formData = new FormData();
 
-      const car: Car = {
-        brand: { id: formValue.brandId, brandName: '' },
-        brandName: formValue.brandName,
-        carId: formValue.carId,
-        model: formValue.model,
-        carSpecification: formValue.carSpecification,
-        engineVolume: formValue.engineVolume,
-        isNew: formValue.isNew,
-        price: formValue.price,
-        releaseDatetime: formValue.releaseDatetime
+      formData.append('brandId', String(formValue.brandId));
+      formData.append('model', formValue.model);
+      formData.append('carSpecification', formValue.carSpecification);
+      formData.append('engineVolume', formValue.engineVolume);
+      formData.append('isNew', formValue.isNew);
+      formData.append('price', formValue.price);
+      formData.append('releaseDatetime', formValue.releaseDatetime);
+      formData.append('photo', this.selectedFile); // 👈 Fotoğraf dahil
 
-      };
-
-      //burayı düzenle fonksiyonlar ayır
-      console.log('Gönderilecek araba:', car);
-
-      this.carService.createCar(car).subscribe({
-        next: () => this.router.navigate(['/car-list']),
+      this.carService.createCarWithPhoto(formData).subscribe({
+        next: () => {console.log("Car and its photo saved succesfully!")
+          this.router.navigate(['/car-list'])
+          },
         error: (err) => console.error('Kayıt hatası:', err)
       });
     }
   }
+
+
 
   openAddBrandDialog(): void {
     const dialogRef = this.dialog.open(AddBrandDialogComponent, {
@@ -108,7 +106,7 @@ export class CarFormComponent {
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length) {
+    if (input.files?.length) {
       this.selectedFile = input.files[0];
 
       // 📸 Preview için

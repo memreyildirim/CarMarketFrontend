@@ -42,7 +42,7 @@ export class CarServiceService {
 
 
   createCarWithPhoto(formData: FormData): Observable<Car> {
-    return this.httpClient.post<Car>('/api/cars', formData);
+    return this.httpClient.post<Car>(`${this.baseURL}/cars`, formData);
   }
 
 
