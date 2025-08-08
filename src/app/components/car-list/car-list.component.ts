@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Car} from "../../models/car";
 import {HttpClient} from "@angular/common/http";
 import {CarServiceService} from "../../services/car-service.service";
@@ -13,6 +13,9 @@ import {FormsModule} from "@angular/forms";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {MatSliderModule} from "@angular/material/slider";
+import {CartServiceService} from "../../services/cart-service.service";
+import {CartItem} from "../../models/cartItem";
+import {MatIcon} from "@angular/material/icon";
 
 
 
@@ -33,12 +36,13 @@ import {MatSliderModule} from "@angular/material/slider";
     MatInput,
     MatLabel,
     CommonModule,
-    MatSliderModule
+    MatSliderModule,
+    MatIcon
   ],
   templateUrl: './car-list.component.html',
   styleUrl: './car-list.component.css'
 })
-export class CarListComponent {
+export class CarListComponent implements OnInit{
 
   displayedColumns: string[] = ['photo','brand','model','price','actions']
   dataSource = new MatTableDataSource<Car>();
@@ -48,10 +52,12 @@ export class CarListComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatTable) table!: MatTable<Car>;
   protected brandList: string[] = [];
+  cartItems: CartItem[] = [];
 
   constructor(private httpClient: HttpClient,
               private carService: CarServiceService,
-              private router: Router) {
+              private router: Router,
+              private cartService: CartServiceService) {
 
   }
 
@@ -60,6 +66,7 @@ export class CarListComponent {
 
     this.loadCars();
     this.loadAllBrands();
+    this.cartItems = this.cartService.getItems();
 
 
   }
@@ -150,4 +157,29 @@ export class CarListComponent {
     };
   }
 
+
+  addToCart(car: Car):void {
+    const item: CartItem = {
+      carId: car.carId,
+      carBrand: car.brand.brandName,
+      carModel: car.model,
+      price: car.price,
+      quantity: 1,
+    }
+
+
+    console.log("added to cart metodu çalıştı",car)
+    if (car){
+      console.log(`${car.brandName} sepete eklendi `)
+      this.cartService.addItem(item);
+    }else {
+      console.warn("car bilgisi boş ya da undefined")
+    }
+
+  }
+
+  goToAddCar() {
+    this.router.navigate(['/car-form']);
+  }
 }
+

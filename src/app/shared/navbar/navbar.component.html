@@ -1,16 +1,22 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark custom-navbar">
   <a class="navbar-brand" routerLink="/">🚗 CarMarket</a>
   <div class="collapse navbar-collapse">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" routerLink="/car-list">Car List</a>
+        <a *ngIf="isLoggedIn" routerLink="/car-list">Car List</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/brand-list">Brand List</a>
+        <a *ngIf="isAdmin" routerLink="/brand-list">Brand List</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/car-form">Add Car</a>
+        <a *ngIf="isLoggedIn" (click)="logout()" style="cursor: pointer;">Logout</a>
       </li>
+
     </ul>
+    <span class="spacer"></span>
+    <!-- 🛒 Sepet Butonu -->
+    <button *ngIf="isLoggedIn" mat-icon-button (click)="openCart()" aria-label="Sepeti Aç">
+      <mat-icon>shopping_cart</mat-icon>
+    </button>
   </div>
 </nav>

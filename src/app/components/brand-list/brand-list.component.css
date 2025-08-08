@@ -30,12 +30,7 @@ button[mat-raised-button] {
   margin-top: 4px;
 }
 
-.custom-table th.mat-header-cell {
-  background-color: #28a745;
-  width: 100%;
-  font-family: 'Segoe UI', sans-serif;
-  border-collapse: collapse;
-}
+
 
 .custom-header {
   background-color: #1976d2;

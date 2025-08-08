@@ -5,3 +5,20 @@
   flex-direction: row;
 }
 
+.custom-drawer {
+  width: 340px;
+  background-color: #f8f9fa;
+  border-left: 1px solid #ddd;
+  overflow-y: auto;
+}
+
+.cart-item h6 {
+  margin-bottom: 0.25rem;
+}
+
+.btn-outline-secondary {
+  font-size: 0.85rem;
+  line-height: 1;
+}
+
+

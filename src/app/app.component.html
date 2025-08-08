@@ -1,7 +1,44 @@
-<app-navbar></app-navbar>
-<div class="custom container">
-  <router-outlet></router-outlet>
-</div>
-<app-footer></app-footer>
+<mat-drawer-container>
+  <mat-drawer #drawer mode="side" position="end" class="custom-drawer bg-light p-3">
+
+    <h4 class="fw-bold mb-4 text-center">🛒 Cart</h4>
+
+    <div *ngIf="cartItems.length === 0">
+      <p>Your cart is empty</p>
+    </div>
+    <div *ngFor="let items of cartItems" class="cart-item mb-4 border-bottom pb-3">
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="flex-grow-1">
+          <h6 class="fw-bold mb-1">{{ items.carModel }}</h6>
+          <div class="text-muted small">Birim Fiyat: {{ items.price | currency:'TRY' }}</div>
+          <div class="text-muted small">Toplam: {{ items.price * items.quantity | currency:'TRY' }}</div>
+          <div class="btn-danger" (click)="removeItem(items.carId)">Delete</div>
+        </div>
 
 
+      </div>
+    </div>
+
+    <div *ngIf="cartItems.length !== 0">
+
+      <div class="text-end mt-4">
+        <button class="btn btn-sm btn-danger" (click)="clearCart()">
+          <i class="bi bi-trash"></i> Sepeti Temizle                          <!-- sepet temizleme çalışmıyor-->
+        </button>
+      </div>
+    </div>
+
+    <div class="mt-4 border-top pt-3 text-end">
+      <h5 class="fw-bold">                                                    <!-- style:"color:blue;padding:3px" şeklinde style verilebilir-->
+        Total Cart: {{ totalPrice | currency:'TRY' }}
+      </h5>
+    </div>
+
+
+  </mat-drawer>
+
+<mat-drawer-content>
+    <app-navbar (toggleDrawer)="drawer.toggle()"></app-navbar>
+    <router-outlet></router-outlet>
+  </mat-drawer-content>
+</mat-drawer-container>

@@ -6,15 +6,17 @@ import {AppComponent} from "./app.component";
 import {CarDetailsComponent} from "./components/car-details/car-details.component";
 import {CarUpdateComponent} from "./components/car-update/car-update.component";
 import {BrandListComponent} from "./components/brand-list/brand-list.component";
+import {LoginScreenComponent} from "./components/login-screen/login-screen.component";
+import {authGuard} from "./guards/auth.guard";
 
 export const routes: Routes = [
   //{path: '', component: CarListComponent},
-
+  {path: 'login-screen', component: LoginScreenComponent},
   {path: 'brand-list', component: BrandListComponent},
-  {path: 'car-detail/:id', component: CarDetailsComponent},
-  {path: "car-form", component: CarFormComponent},
-  {path: "update-car/:id", component: CarUpdateComponent},
-  {path: "car-list", component: CarListComponent}
+  {path: 'car-detail/:id', component: CarDetailsComponent, canActivate: [authGuard], data: {expectedRoles:['USER', 'ADMIN']}},
+  {path: "car-form", component: CarFormComponent, canActivate: [authGuard], data: {expectedRoles: 'ADMIN'}},
+  {path: "update-car/:id", component: CarUpdateComponent, canActivate: [authGuard], data: {expectedRoles: 'ADMIN'}},
+  {path: "car-list", component: CarListComponent, canActivate: [authGuard], data: {expectedRoles:['USER', 'ADMIN']}}
 ];
 
 @NgModule({
