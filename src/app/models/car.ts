@@ -4,7 +4,7 @@ export interface Car {
   carId: number; // Optional çünkü ekleme sırasında olmayabilir
   brandName: string;
   brand: Brand;
-  model: String;
+  model: string;
   carSpecification: string;
   engineVolume: number;
   isNew: boolean;

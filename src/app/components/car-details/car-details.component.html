@@ -1,51 +1,49 @@
-<div class="car-details-layout">
-  <!-- Sol: Araç görseli -->
-  <div class="car-photo-container">
-    <img [src]="'http://localhost:10160' + car.filePath" class="car-photo" alt="car photo"/>
-  </div>
+<div class="container py-4">
+  <div class="d-flex flex-column align-items-center gap-4">
 
-  <!-- Sağ: Bilgi kartı -->
-  <div class="car-info-card">
-    <div class="card shadow-sm border-0">
-      <div class="card-body">
-        <div class="car-title-wrapper d-flex align-items-center justify-content-between">
-          <div class="car-text">
-            <div class="car-brand fw-bold">{{ car?.brandName }}</div>
-            <div class="car-model">{{ car?.model }}</div>
+    <!-- Araç görseli -->
+    <div class="car-photo-container text-center">
+      <img [src]="car.filePath ? 'http://localhost:10160' + car.filePath : 'assets/carNotFound.png'"
+           class="car-photo img-fluid" alt="car photo" />
+    </div>
+
+    <!-- Bilgi kartı -->
+    <div class="car-info-card w-100" style="max-width: 440px; padding: 18px; background: #1e88e5 linear-gradient(to right, #000000, #1e88e5);; border-radius: 8px;">
+      <div class="card shadow border-0 bg-gradient" style="background: linear-gradient(to right, #1e88e5, #000000);">
+        <div class="card-body bg-white rounded">
+
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+              <h5 class="fw-bold mb-1">{{ car?.brandName }}</h5>
+              <div>{{ car?.model }}</div>
+            </div>
+            <span class="badge bg-{{ car?.isNew ? 'success' : 'secondary' }} status-badge">
+              {{ car?.isNew ? 'New' : 'Secondhand' }}
+            </span>
           </div>
-          <span class="status-badge bg-{{ car?.isNew ? 'success' : 'secondary' }}">
-            {{ car?.isNew ? 'New' : 'Secondhand' }}
-          </span>
-        </div>
 
-        <ul class="list-group list-group-flush mb-3">
-          <li class="list-group-item">
-            <strong>Release Time:</strong>
-            {{ car?.releaseDatetime | date:'medium' }}
-          </li>
-          <li class="list-group-item">
-            <strong>Engine Volume:</strong>
-            {{ car?.engineVolume }} cc
-          </li>
-          <li class="list-group-item">
-            <strong>Price:</strong>
-            {{ car?.price | currency:'TRY':'symbol':'1.0-0' }}
-          </li>
-          <li class="list-group-item">
-            <strong>Specifications:</strong>
-            {{ car?.carSpecification }}
-          </li>
-        </ul>
+          <ul class="list-group list-group-flush mb-2">
+            <li class="list-group-item"><strong>Release Time:</strong> {{ car?.releaseDatetime | date:'medium' }}</li>
+            <li class="list-group-item"><strong>Engine Volume:</strong> {{ car?.engineVolume }} cc</li>
+            <li class="list-group-item"><strong>Price:</strong> {{ car?.price | currency:'TRY':'symbol':'1.0-0' }}</li>
+            <li class="list-group-item"><strong>Specifications:</strong> {{ car?.carSpecification }}</li>
+          </ul>
 
-        <div class="d-flex justify-content-end gap-2">
-          <button class="btn btn-outline-danger" (click)="deleteCar()">
-            <i class="bi bi-trash"></i> Delete
-          </button>
-          <button class="btn btn-outline-primary" (click)="updateCar(car.carId)">
-            <i class="bi bi-pencil-square"></i> Update
-          </button>
+          <div class="d-flex justify-content-end gap-2">
+            <button *ngIf="isAdmin" class="btn btn-outline-danger" (click)="deleteCar()">
+              <i class="bi bi-trash"></i> Delete
+            </button>
+            <button *ngIf="isAdmin" class="btn btn-outline-primary" (click)="updateCar(car.carId)"> <!-- if the logger admin ,button visible-->
+              <i class="bi bi-pencil-square"></i> Update
+            </button>
+            <button *ngIf="!isAdmin" class="btn btn-outline-primary" (click)="addToCart(car)">
+              <i class="bi bi-pencil-square"></i> Add to Cart
+            </button>
+          </div>
+
         </div>
       </div>
     </div>
+
   </div>
 </div>

@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {Car} from "../../models/car";
 import {HttpClient} from "@angular/common/http";
 import {CarServiceService} from "../../services/car-service.service";
@@ -13,6 +13,10 @@ import {FormsModule} from "@angular/forms";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {MatSliderModule} from "@angular/material/slider";
+import {CartServiceService} from "../../services/cart-service.service";
+import {CartItem} from "../../models/cartItem";
+import {MatIcon} from "@angular/material/icon";
+import {AuthServiceService} from "../../services/auth-service.service";
 
 
 
@@ -33,12 +37,13 @@ import {MatSliderModule} from "@angular/material/slider";
     MatInput,
     MatLabel,
     CommonModule,
-    MatSliderModule
+    MatSliderModule,
+    MatIcon
   ],
   templateUrl: './car-list.component.html',
   styleUrl: './car-list.component.css'
 })
-export class CarListComponent {
+export class CarListComponent implements OnInit{
 
   displayedColumns: string[] = ['photo','brand','model','price','actions']
   dataSource = new MatTableDataSource<Car>();
@@ -48,10 +53,14 @@ export class CarListComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatTable) table!: MatTable<Car>;
   protected brandList: string[] = [];
+  cartItems: CartItem[] = [];
 
   constructor(private httpClient: HttpClient,
               private carService: CarServiceService,
-              private router: Router) {
+              private router: Router,
+              private cartService: CartServiceService,
+              private authService: AuthServiceService,
+              private cdref: ChangeDetectorRef) {
 
   }
 
@@ -60,32 +69,27 @@ export class CarListComponent {
 
     this.loadCars();
     this.loadAllBrands();
+    this.cartItems = this.cartService.getItems();
+
+    console.log("ngoninit çalıştı")
 
 
   }
 
-  @ViewChild(MatPaginator) set matPaginator(p: MatPaginator) {
-    this.dataSource.paginator = p;
-    this.triggerTableSync();
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+
+    this.table.renderRows();
   }
 
-  @ViewChild(MatSort) set matSort(s: MatSort) {
-    this.dataSource.sort = s;
-    this.triggerTableSync();
+  ngDoCheck() {
+    this.isUser = this.authService.isUser();
+
+    console.log("ngdocheck çalıştı")
   }
 
-  triggerTableSync(): void {
-    this.dataSource.sortingDataAccessor = (item: Car, property: string): string | number => {
-      switch (property) {
-        case 'brand': return item.brand?.brandName?.toLowerCase() || '';
-        case 'model': return item.model?.toLowerCase() || '';
-        case 'price': return item.price || 0;
-        default: return (item as any)[property];
-      }
-    };
 
-    this.dataSource.filter = '';
-  }
 
 
 
@@ -125,6 +129,7 @@ export class CarListComponent {
   minPrice: number = 0;
   maxPrice: number = 0;
   maxEngineVolume: number = 4.5;
+  isUser: boolean = false;
 
   filterByValues(): void {
     console.log("seçile markalar", this.selectedBrands)
@@ -133,7 +138,11 @@ export class CarListComponent {
       minPrice: this.minPrice,
       maxPrice: this.maxPrice,
       maxEngineVolume: this.maxEngineVolume};
+    this.setupFilterPredicate();
     this.dataSource.filter = JSON.stringify(filterObj) ;
+    console.log("filtrelenen araçlar", this.dataSource.filteredData)
+    this.cdref.detectChanges();
+    this.table.renderRows();
   }
 
   setupFilterPredicate(): void {
@@ -150,4 +159,29 @@ export class CarListComponent {
     };
   }
 
+
+  addToCart(car: Car):void {
+    const item: CartItem = {
+      carId: car.carId,
+      carBrand: car.brand.brandName,
+      carModel: car.model,
+      price: car.price,
+      quantity: 1,
+    }
+
+
+    console.log("added to cart metodu çalıştı",car)
+    if (car){
+      console.log(`${car.brandName} sepete eklendi `)
+      this.cartService.addItem(item);
+    }else {
+      console.warn("car bilgisi boş ya da undefined")
+    }
+
+  }
+
+  goToAddCar() {
+    this.router.navigate(['/car-form']);
+  }
 }
+
