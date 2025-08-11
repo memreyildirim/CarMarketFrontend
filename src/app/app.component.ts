@@ -28,6 +28,7 @@ export class AppComponent implements OnInit {
   title: string | undefined;
   cartItems: CartItem[] = [];
 
+
   constructor(private cartService: CartServiceService) {
 
   }

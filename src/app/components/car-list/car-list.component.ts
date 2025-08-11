@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {Car} from "../../models/car";
 import {HttpClient} from "@angular/common/http";
 import {CarServiceService} from "../../services/car-service.service";
@@ -16,6 +16,7 @@ import {MatSliderModule} from "@angular/material/slider";
 import {CartServiceService} from "../../services/cart-service.service";
 import {CartItem} from "../../models/cartItem";
 import {MatIcon} from "@angular/material/icon";
+import {AuthServiceService} from "../../services/auth-service.service";
 
 
 
@@ -57,7 +58,9 @@ export class CarListComponent implements OnInit{
   constructor(private httpClient: HttpClient,
               private carService: CarServiceService,
               private router: Router,
-              private cartService: CartServiceService) {
+              private cartService: CartServiceService,
+              private authService: AuthServiceService,
+              private cdref: ChangeDetectorRef) {
 
   }
 
@@ -68,31 +71,25 @@ export class CarListComponent implements OnInit{
     this.loadAllBrands();
     this.cartItems = this.cartService.getItems();
 
+    console.log("ngoninit çalıştı")
+
 
   }
 
-  @ViewChild(MatPaginator) set matPaginator(p: MatPaginator) {
-    this.dataSource.paginator = p;
-    this.triggerTableSync();
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+
+    this.table.renderRows();
   }
 
-  @ViewChild(MatSort) set matSort(s: MatSort) {
-    this.dataSource.sort = s;
-    this.triggerTableSync();
+  ngDoCheck() {
+    this.isUser = this.authService.isUser();
+
+    console.log("ngdocheck çalıştı")
   }
 
-  triggerTableSync(): void {
-    this.dataSource.sortingDataAccessor = (item: Car, property: string): string | number => {
-      switch (property) {
-        case 'brand': return item.brand?.brandName?.toLowerCase() || '';
-        case 'model': return item.model?.toLowerCase() || '';
-        case 'price': return item.price || 0;
-        default: return (item as any)[property];
-      }
-    };
 
-    this.dataSource.filter = '';
-  }
 
 
 
@@ -132,6 +129,7 @@ export class CarListComponent implements OnInit{
   minPrice: number = 0;
   maxPrice: number = 0;
   maxEngineVolume: number = 4.5;
+  isUser: boolean = false;
 
   filterByValues(): void {
     console.log("seçile markalar", this.selectedBrands)
@@ -140,7 +138,11 @@ export class CarListComponent implements OnInit{
       minPrice: this.minPrice,
       maxPrice: this.maxPrice,
       maxEngineVolume: this.maxEngineVolume};
+    this.setupFilterPredicate();
     this.dataSource.filter = JSON.stringify(filterObj) ;
+    console.log("filtrelenen araçlar", this.dataSource.filteredData)
+    this.cdref.detectChanges();
+    this.table.renderRows();
   }
 
   setupFilterPredicate(): void {

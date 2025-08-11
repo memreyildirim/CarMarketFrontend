@@ -22,7 +22,7 @@
             </span>
           </div>
 
-          <ul class="list-group list-group-flush mb-3">
+          <ul class="list-group list-group-flush mb-2">
             <li class="list-group-item"><strong>Release Time:</strong> {{ car?.releaseDatetime | date:'medium' }}</li>
             <li class="list-group-item"><strong>Engine Volume:</strong> {{ car?.engineVolume }} cc</li>
             <li class="list-group-item"><strong>Price:</strong> {{ car?.price | currency:'TRY':'symbol':'1.0-0' }}</li>
@@ -30,11 +30,14 @@
           </ul>
 
           <div class="d-flex justify-content-end gap-2">
-            <button class="btn btn-outline-danger" (click)="deleteCar()">
+            <button *ngIf="isAdmin" class="btn btn-outline-danger" (click)="deleteCar()">
               <i class="bi bi-trash"></i> Delete
             </button>
-            <button class="btn btn-outline-primary" (click)="updateCar(car.carId)">
+            <button *ngIf="isAdmin" class="btn btn-outline-primary" (click)="updateCar(car.carId)"> <!-- if the logger admin ,button visible-->
               <i class="bi bi-pencil-square"></i> Update
+            </button>
+            <button *ngIf="!isAdmin" class="btn btn-outline-primary" (click)="addToCart(car)">
+              <i class="bi bi-pencil-square"></i> Add to Cart
             </button>
           </div>
 

@@ -8,11 +8,12 @@ import {CarUpdateComponent} from "./components/car-update/car-update.component";
 import {BrandListComponent} from "./components/brand-list/brand-list.component";
 import {LoginScreenComponent} from "./components/login-screen/login-screen.component";
 import {authGuard} from "./guards/auth.guard";
+import {MainScreenComponent} from "./components/main-screen/main-screen.component";
 
 export const routes: Routes = [
-  //{path: '', component: CarListComponent},
+  {path: '', component: MainScreenComponent , canActivate: [authGuard], data: {expectedRoles:['USER', 'ADMIN']}},
   {path: 'login-screen', component: LoginScreenComponent},
-  {path: 'brand-list', component: BrandListComponent},
+  {path: 'brand-list', component: BrandListComponent, canActivate: [authGuard], data: {expectedRoles: ['ADMIN']}},
   {path: 'car-detail/:id', component: CarDetailsComponent, canActivate: [authGuard], data: {expectedRoles:['USER', 'ADMIN']}},
   {path: "car-form", component: CarFormComponent, canActivate: [authGuard], data: {expectedRoles: 'ADMIN'}},
   {path: "update-car/:id", component: CarUpdateComponent, canActivate: [authGuard], data: {expectedRoles: 'ADMIN'}},

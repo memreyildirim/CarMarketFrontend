@@ -91,3 +91,7 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   background: #1e88e5 linear-gradient(to right, #000000, #1e88e5);
 }
+
+.custom-paginator{
+  padding-right: 50px;
+}

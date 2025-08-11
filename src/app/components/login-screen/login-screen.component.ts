@@ -60,7 +60,7 @@ export class LoginScreenComponent implements OnInit{
         if (role === 'admin') {
           this.router.navigate(['/car-list']);
         } else if (role === 'user') {
-          this.router.navigate(['/car-list']);
+          this.router.navigate(['/']);
         } else {
           this.router.navigate(['/']);
         }

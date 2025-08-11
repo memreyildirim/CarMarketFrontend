@@ -1,22 +1,31 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark custom-navbar">
-  <a class="navbar-brand" routerLink="/">🚗 CarMarket</a>
-  <div class="collapse navbar-collapse">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a *ngIf="isLoggedIn" routerLink="/car-list">Car List</a>
-      </li>
-      <li class="nav-item">
-        <a *ngIf="isAdmin" routerLink="/brand-list">Brand List</a>
-      </li>
-      <li class="nav-item">
-        <a *ngIf="isLoggedIn" (click)="logout()" style="cursor: pointer;">Logout</a>
-      </li>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-2 py-2 custom-navbar">
+  <a class="navbar-brand text-white" routerLink="/">🚗 CarMarket</a>
 
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav me-auto">
+      <li class="nav-item" *ngIf="isLoggedIn">
+        <a class="nav-link text-white" routerLink="/car-list">Car List</a>
+      </li>
+      <li class="nav-item" *ngIf="isAdmin">
+        <a class="nav-link text-white" routerLink="/brand-list">Brand List</a>
+      </li>
     </ul>
-    <span class="spacer"></span>
-    <!-- 🛒 Sepet Butonu -->
-    <button *ngIf="isLoggedIn" mat-icon-button (click)="openCart()" aria-label="Sepeti Aç">
-      <mat-icon>shopping_cart</mat-icon>
-    </button>
+
+    <!-- Cart Button -->
+    <div *ngIf="isUser" class="d-flex align-items-center">
+      <button mat-icon-button (click)="openCart()" aria-label="Sepeti Aç" class="text-white me-2">
+        <mat-icon>shopping_cart</mat-icon>
+      </button>
+    </div>
+
+    <div *ngIf="isLoggedIn" class="d-flex align-items-center">
+      <button  mat-icon-button (click)="logout()" aria-label="Logout" class="text-white me-2">
+        <mat-icon>logout</mat-icon>
+      </button>
+    </div>
   </div>
 </nav>

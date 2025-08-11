@@ -41,7 +41,7 @@
     <ng-container matColumnDef="photo">
       <th mat-header-cell *matHeaderCellDef> Photo </th>
       <td mat-cell *matCellDef="let car">
-        <img [src]="car.filePath ? 'http://localhost:10160' + car.filePath : 'assets/carNotFound.png'"
+        <img  [src]="car.filePath ? 'http://localhost:10160' + car.filePath : 'assets/carNotFound.png'"
              width="48" height="32"
              style="object-fit: cover; border-radius: 4px;" />
       </td>
@@ -70,8 +70,8 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef>Actions</th>
       <td mat-cell *matCellDef="let car">
-        <button mat-button class="viewDetails-button" (click)="carDetails(car.carId)">View Details</button>
-        <button mat-stroked-button color="primary" class="addToCart-button" (click)="addToCart(car)">
+        <button mat-button class="viewDetails-button" (click)="carDetails(car.carId)">Details</button>
+        <button *ngIf="isUser" mat-stroked-button color="primary" class="addToCart-button" (click)="addToCart(car)">
         <i class="bi bi-cart-plus"></i> Add to Cart
           </button>
       </td>
@@ -87,7 +87,7 @@
 
     <mat-paginator [length]="dataSource.data.length"
                    [pageSize]="8"
-                   showFirstLastButtons>
+                   showFirstLastButtons class="custom-paginator">
 
     </mat-paginator>
 

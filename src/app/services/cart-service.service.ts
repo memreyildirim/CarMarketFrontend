@@ -38,6 +38,10 @@ export class CartServiceService {
 
   constructor(private httpClient: HttpClient) {
 
+    const stored = localStorage.getItem("cart");
+    this.items = stored ? JSON.parse(stored) : [];
+    this.itemsSubject.next(this.items);
+
   }
 
   /* eğer db de tutulacaksa bu şekilde istek atılır
@@ -61,18 +65,7 @@ export class CartServiceService {
  */
 
   removeItem(carId: number): void {
-    console.log("items before:", this.items.map(i => i.carId));
-
-    console.log("Removing carId:", carId);
-
-    const filtered = this.items.filter(item => {
-      console.log("Checking item:", item.carId, "vs", carId);
-      return item.carId !== carId;
-    });
-
-    console.log("After remove:", filtered);
-
-    this.items = filtered;
+    this.items = this.items.filter(item => String(item.carId) !== String(carId));
     this.itemsSubject.next(this.items);
     localStorage.setItem("cart", JSON.stringify(this.items));
   }

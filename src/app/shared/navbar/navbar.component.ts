@@ -23,6 +23,7 @@ export class NavbarComponent implements DoCheck {
 
   isLoggedIn: boolean = false;
   isAdmin: boolean = false;
+  isUser: boolean = false;
 
 
   constructor(private router:Router,
@@ -31,10 +32,9 @@ export class NavbarComponent implements DoCheck {
 
   ngDoCheck() {
     this.isAdmin = this.authService.isAdmin();
-    if (this.isAdmin) {
-      console.log("admin girişi yapılıd");
-    }
+    this.isUser = this.authService.isUser();
     this.isLoggedIn = this.authService.isLoggedIn();
+
   }
 
 
