@@ -1,11 +1,19 @@
 import { Component } from '@angular/core';
-import {MatDialog, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef} from "@angular/material/dialog";
+import {
+  MatDialog,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContent,
+  MatDialogRef,
+  MatDialogTitle
+} from "@angular/material/dialog";
 import {MatFormField} from "@angular/material/form-field";
 import { MatInputModule } from '@angular/material/input';
 import {FormsModule} from "@angular/forms";
 import {BrandServiceService} from "../../services/brand-service.service";
 import {Brand} from "../../models/brand";
 import {MatSnackBar, MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatButton} from "@angular/material/button";
 
 @Component({
   selector: 'app-add-brand-dialog',
@@ -18,6 +26,8 @@ import {MatSnackBar, MatSnackBarModule} from "@angular/material/snack-bar";
     MatDialogActions,
     MatDialogClose,
     MatSnackBarModule,
+    MatButton,
+    MatDialogTitle,
   ],
   templateUrl: './add-brand-dialog.component.html',
   styleUrl: './add-brand-dialog.component.css'

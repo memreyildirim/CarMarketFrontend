@@ -7,20 +7,25 @@ import {MatDrawer, MatDrawerContainer, MatDrawerContent} from "@angular/material
 import {CurrencyPipe, NgForOf, NgIf} from "@angular/common";
 import {CartItem} from "./models/cartItem";
 import {CartServiceService} from "./services/cart-service.service";
+import {AuthServiceService} from "./services/auth-service.service";
+import {UIService} from "./services/ui-service.service";
+
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet,
-    RouterLink,
-    NavbarComponent,
-    FooterComponent,
-    MatDrawerContent,
-    MatDrawerContainer,
-    MatDrawer, CurrencyPipe, NgForOf, NgIf],
+            NavbarComponent,
+            FooterComponent,
+            MatDrawerContent,
+            MatDrawerContainer,
+            MatDrawer,
+            CurrencyPipe,
+            NgForOf,
+            NgIf],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
 })
 export class AppComponent implements OnInit {
 
@@ -28,8 +33,13 @@ export class AppComponent implements OnInit {
   title: string | undefined;
   cartItems: CartItem[] = [];
 
+  @ViewChild('cartDrawer') cartDrawer!: MatDrawer;
 
-  constructor(private cartService: CartServiceService) {
+
+
+
+  constructor(private cartService: CartServiceService,
+              private uiService : UIService) {
 
   }
 
@@ -39,6 +49,7 @@ export class AppComponent implements OnInit {
       this.cartItems = items;
     });
   }
+
 
   clearCart() {
     this.cartService.clearCart();
@@ -56,4 +67,5 @@ export class AppComponent implements OnInit {
   get totalPrice(): number {
     return this.cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
   }
+
 }

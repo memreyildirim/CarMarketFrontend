@@ -1,11 +1,11 @@
-<h2 mat-dialog-title>Yeni Marka Ekle</h2>
+<h2 mat-dialog-title>Add New Brand</h2>
 <mat-dialog-content>
   <mat-form-field appearance="outline" class="w-100">
-    <mat-label>Marka Adı</mat-label>
+    <mat-label>Brand Name</mat-label>
     <input matInput [(ngModel)]="brandName" />
   </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close >İptal</button> <!--mat-dialog-close anguladan gelen kapatma özelliğ/istenirse close() func da çağırılabilir in component.ts deki-->
-  <button mat-button  color="primary" (click)="addBrand()" >Ekle</button>
+  <button mat-button mat-dialog-close >Cancel</button> <!--mat-dialog-close anguladan gelen kapatma özelliğ/istenirse close() func da çağırılabilir in component.ts deki-->
+  <button mat-button  color="primary" (click)="addBrand()" >Add</button>
 </mat-dialog-actions>
