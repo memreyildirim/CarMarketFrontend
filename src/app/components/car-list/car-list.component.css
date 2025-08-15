@@ -95,3 +95,23 @@
 .custom-paginator{
   padding-right: 50px;
 }
+
+.price-indicator {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 8px;
+  vertical-align: middle;
+
+  &.cheap {
+    background-color: #28a745;
+  }
+  &.medium {
+    background-color: #ffc107;
+  }
+  &.expensive {
+    background-color: #dc3545;
+  }
+}
+

@@ -17,6 +17,7 @@ import {CartServiceService} from "../../services/cart-service.service";
 import {CartItem} from "../../models/cartItem";
 import {MatIcon} from "@angular/material/icon";
 import {AuthServiceService} from "../../services/auth-service.service";
+import {MatTooltip} from "@angular/material/tooltip";
 
 
 
@@ -38,7 +39,8 @@ import {AuthServiceService} from "../../services/auth-service.service";
     MatLabel,
     CommonModule,
     MatSliderModule,
-    MatIcon
+    MatIcon,
+    MatTooltip
   ],
   templateUrl: './car-list.component.html',
   styleUrl: './car-list.component.css'
@@ -54,6 +56,9 @@ export class CarListComponent implements OnInit{
   @ViewChild(MatTable) table!: MatTable<Car>;
   protected brandList: string[] = [];
   cartItems: CartItem[] = [];
+
+  fairyPrice: number = 1000000;
+  averagePrice: number = 3000000;
 
   constructor(private httpClient: HttpClient,
               private carService: CarServiceService,
@@ -183,5 +188,24 @@ export class CarListComponent implements OnInit{
   goToAddCar() {
     this.router.navigate(['/car-form']);
   }
+
+  getPriceLevel(price: number): 'cheap' | 'medium' | 'expensive' {
+    if (price < this.fairyPrice)
+      return 'cheap';
+    else if (price < this.averagePrice)
+      return 'medium';
+    else
+    return 'expensive';
+  }
+
+  getPriceLevelLabel(price: number): string {
+    if (price < this.fairyPrice)
+      return 'Fair Price';
+    else if (price < this.averagePrice)
+      return 'Average Price';
+    else
+      return 'Luxury Price';
+  }
+
 }
 
