@@ -1,27 +1,41 @@
-# CarMarketFrontend
+# CarMarket Frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.17.
+CarMarket uygulamasının Angular tabanlı frontend’i. JWT ile giriş yapar; araç/marka listeleme, araç detayları, araç ekleme-güncelleme ve sepet (drawer) gibi temel ekranları içerir.
 
-## Development server
+## Teknolojiler
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- **Angular 17** (Angular CLI `17.3.17`)
+- **Angular Material** (örn. `MatDrawer` ile sepet)
+- **Bootstrap 5**
+- **RxJS**
+- **jwt-decode** (token çözümleme)
 
-## Code scaffolding
+## Özellikler
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- **Auth**
+  - Login ekranı
+  - JWT token’ı `localStorage`’a kaydeder (`auth_token`)
+  - Kullanıcı rolünü `localStorage`’a kaydeder (`user_role`: `admin` / `user`)
+- **Araçlar**
+  - Araç listeleme
+  - Araç detay
+  - Araç ekleme / güncelleme
+  - Silme
+  - Foto ile araç oluşturma (FormData endpoint’i mevcut)
+- **Markalar**
+  - Marka listeleme
+  - Ekleme / silme / güncelleme
+- **Sepet**
+  - Sağdan açılır sepet drawer’ı
+  - Toplam tutar (TRY)
 
-## Build
+## Gereksinimler
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- **Node.js** (LTS önerilir)
+- **Angular CLI** (opsiyonel; projede `npm scripts` ile de çalışır)
+- Çalışan bir backend API (aşağıya bakın)
 
-## Running unit tests
+## Kurulum
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```bash
+npm install
