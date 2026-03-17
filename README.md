@@ -35,7 +35,9 @@ CarMarket uygulamasının Angular tabanlı frontend’i. JWT ile giriş yapar; a
 - **Angular CLI** (opsiyonel; projede `npm scripts` ile de çalışır)
 - Çalışan bir backend API (aşağıya bakın)
 
-## Kurulum
+## Kurulum ve Çalıştırma(Server post 4160 olarak)
 
 ```bash
 npm install
+npm run build
+npm start
